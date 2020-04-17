@@ -28,7 +28,7 @@ public class BeverageApp {
         menu.entrySet().forEach(m ->LOGGER.info(m.toString()));
         //place an order
         Integer orderNo = placeOrder(sc, menu);
-        final double cost = factory.getInvoiceFromOrder(menu.get(orderNo));
+        final double cost = factory.getFinalCostForSelectedOrder(menu.get(orderNo));
 
         LOGGER.info("Your total cost is ${}", cost);
 
