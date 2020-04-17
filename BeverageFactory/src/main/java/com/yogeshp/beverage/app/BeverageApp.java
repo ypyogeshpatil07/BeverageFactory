@@ -7,6 +7,7 @@ import com.yogeshp.beverage.app.factory.BeverageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.InputMismatchException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -35,8 +36,16 @@ public class BeverageApp {
     }
 
     private static Integer placeOrder(Scanner sc, Map<Integer, String> menu) {
+        Integer orderNo ;
         LOGGER.info("Enter a Order Number You have selected from the Menu: ");
-        Integer orderNo= sc.nextInt();
+        try {
+            orderNo= sc.nextInt();
+        }
+        catch (InputMismatchException ex){
+            LOGGER.error("Not a valid input");
+            throw  new InvalidOrderException("Please place a valid order Number else order will not be placed  " +ex);
+        }
+
         switch(orderNo)
         {
             case 1:
