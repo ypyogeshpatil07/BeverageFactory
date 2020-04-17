@@ -2,7 +2,7 @@
 # Description
 It is a simple java application which calculates the cost of items ordered as per problem statement mentioned at the end.
 
-#Validation & Exception Handling
+## Validation & Exception Handling
 If order string contains invalid input appropriate exceptions will be thrown by the program.
 
 ## Getting Started
