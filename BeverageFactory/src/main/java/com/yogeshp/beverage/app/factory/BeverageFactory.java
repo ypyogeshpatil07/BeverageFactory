@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class BeverageFactory {
 
     //      This stores the combination of Items with allowed exclusions
-    Map<String, List<String>> beveragesMap = BeverageLoader.getBeveragesMap();
+    Map<String, List<String>> beveragesStock = BeverageLoader.getBeveragesMap();
 
     //      This stores the price of Items
     Map<String, Double> itemRates = BeverageLoader.getItemRates();
@@ -25,30 +25,30 @@ public class BeverageFactory {
     Map<String, Double> ingredientRates = BeverageLoader.getIngredientRates();
 
     //      get cost of each item in order and total them
-    public double getInvoiceFromOrder(String order) {
+    public double getFinalCostForSelectedOrder(String order) {
         double cost = 0.0d;
         List<String> orderItems = getItemsFromOrder(order.trim());
         for (String item : orderItems) {
             List<String> itemWithIngredients = getIngredientFromItem(item);
             //validation of the item
-            checkIfValidOrder(item);
+            validateOrder(item);
             cost = cost + calculateInvoice(itemWithIngredients);
         }
         return cost;
     }
 
-    //     if ordered item not present in DataLoader or empty order returns false
-    private void checkIfValidOrder(String item) {
+    //     if ordered item not present in BeverageLoader or empty order returns false
+    private void validateOrder(String item) {
         List<String> itemIngredients = getIngredientFromItem(item);
 
         //case: if order does not contains valid menu item
-        if (!beveragesMap.containsKey(itemIngredients.get(0)))
+        if (!beveragesStock.containsKey(itemIngredients.get(0)))
             throw new InvalidOrderException("Invalid item ordered -> " + item + " .Order again with valid menu item..!!");
 
-        List<String> allIngredients = beveragesMap.get(itemIngredients.get(0)); // Beverage name is always at index 0
+        List<String> allIngredients = beveragesStock.get(itemIngredients.get(0)); // Beverage name is always at index 0
         // check to ensure items are there in list
 
-        // case: when duplicate ingredients are present in order
+        // case: when duplicate ingredients are present in order like Chai,  -water,-water, Coffee, Mojito
         Optional<String> duplicateIngredient = itemIngredients.stream().filter(i -> Collections.frequency(itemIngredients, i) > 1).findFirst();
         if (duplicateIngredient.isPresent())
             throw new DuplicateIngredientException("Duplicate ingredient not allowed -> " + duplicateIngredient.get());
