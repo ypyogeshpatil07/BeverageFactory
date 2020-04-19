@@ -67,7 +67,7 @@ public class BeverageFactory {
 
     }
 
-    //     get Item and exclusion prices from DataLoader and return cost for each item in order
+    //     get Item and exclusion prices from BeverageLoader and return cost for each item in order
     private Double calculateInvoice(List<String> itemWithIngredients) {
         Double itemValue = itemRates.get(itemWithIngredients.get(0));
         Double ingredientsValue = 0.0d;
